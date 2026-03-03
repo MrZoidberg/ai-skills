@@ -60,7 +60,7 @@ or put contents of `coding-python` folder to `~/.copilot/skills/`
 OpenAI Codex doesn't have a built-in plugin system, but you can use individual plugins README instructions to install them or use universal installer script:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --system copilot --scope system --plugin {PLUGIN_NAME} -y
+curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --system codex --scope system --plugin {PLUGIN_NAME} -y
 ```
 
 ## References
