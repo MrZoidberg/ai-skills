@@ -1,0 +1,18 @@
+{
+  "name": "zoid-ai-skills",
+  "owner": {
+    "name": "Mykhaylo Merkulov",
+    "email": "mike@merkulov.me"
+  },
+  "metadata": {
+    "description": "A collection of AI skills for software development",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "coding-python",
+      "source": "./plugins/coding-python",
+      "description": "Practical Python project setup + everyday development tasks. Supports existing repo toolchains (uv/poetry/pip) and can scaffold a new pyproject.toml-based project."
+    }
+  ]
+}

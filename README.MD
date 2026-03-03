@@ -30,118 +30,22 @@ Use it for:
 
 Folder: `coding-python/`
 
-### Universal installer (recommended)
+## Installation
 
-These installers can install any skill from this repo by prompting you (interactive) or by flags.
+### GitHub Copilot
 
-They ask for:
-- skill name (e.g. `coding-python`)
-- agentic system (`codex`, `copilot`, `claude`, `antigravity`)
-- scope (`system` / `repo`)
+Add the markplace using Copilot CLI:
 
-macOS / Linux (bash):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh
+```
+/plugin marketplace add MrZoidberg/ai-skills
+/plugin install coding-python@zoid-ai-skills
 ```
 
-Windows (PowerShell):
+or put `coding-python` to `.copilot/skills/`
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "& { $s = irm https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.ps1; iex $s; Install-AiSkill }"
-```
+## References
 
-### Install for Codex
-
-System-wide install:
-
-```text
-$skill-installer install https://github.com/MrZoidberg/ai-skills/tree/master/coding-python
-```
-
-Project-specific install:
-
-```text
-$skill-installer install https://github.com/MrZoidberg/ai-skills/tree/master/coding-python .agents/skills
-```
-
-### Install for GitHub Copilot
-
-GitHub Copilot agent skills are discovered from either a repository location or a personal location.
-
-**System-wide (personal) install**:
-
-macOS / Linux (bash):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --system copilot --scope system --skill coding-python -y
-```
-
-Windows (PowerShell):
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "& { $s = irm https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.ps1; iex $s; Install-AiSkill -System copilot -Scope system -Skill coding-python -Yes }"
-```
-
-**Project install**:
-
-In the target repo:
-
-macOS / Linux (bash, run from repo root):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --system copilot --scope repo --skill coding-python -y
-```
-
-Windows (PowerShell, run from repo root):
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "& { $s = irm https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.ps1; iex $s; Install-AiSkill -System copilot -Scope repo -Skill coding-python -Yes }"
-```
-
-Interactive mode (no args):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh
-```
-
-Notes:
-
-- The skill directory name should match the `name:` in the skill frontmatter.
-- Copilot loads `SKILL.md` and any referenced files inside that folder.
-
-### Install for Claude Code (skills)
-
-Claude Code uses a similar discovery mechanism to Copilot.
-
-**System-wide (personal) install**:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --system claude --scope system --skill coding-python -y
-```
-
-**Project install**:
-
-In the target repo:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --system claude --scope repo --skill coding-python -y
-```
-
-Windows equivalents:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "& { $s = irm https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.ps1; iex $s; Install-AiSkill -System claude -Scope system -Skill coding-python -Yes }"
-powershell -NoProfile -ExecutionPolicy Bypass -Command "& { $s = irm https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.ps1; iex $s; Install-AiSkill -System claude -Scope repo -Skill coding-python -Yes }"
-```
-
-### Install for Antigravity
-
-This repo doesn’t ship an Antigravity-specific installer.
-
-If Antigravity supports the agent skills open standard (a directory containing `SKILL.md` plus resources), point it at the `coding-python/` directory or copy it into Antigravity’s configured skills folder.
-
-If it only supports “custom instructions”, you can paste the contents of `coding-python/SKILL.md` into whatever Antigravity uses for per-project instructions.
+- [Copilot Plugins installation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing)
 
 ---
 
