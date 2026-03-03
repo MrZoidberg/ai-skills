@@ -53,7 +53,15 @@ Add the markplace using Copilot CLI:
 /plugin install coding-python@zoid-ai-skills
 ```
 
-or put `coding-python` to `.copilot/skills/`
+or put contents of `coding-python` folder to `~/.copilot/skills/`
+
+### OpenAI Codex
+
+OpenAI Codex doesn't have a built-in plugin system, but you can use individual plugins README instructions to install them or use universal installer script:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --system copilot --scope system --plugin {PLUGIN_NAME} -y
+```
 
 ## References
 
