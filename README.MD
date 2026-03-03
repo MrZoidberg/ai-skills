@@ -30,6 +30,18 @@ Use it for:
 
 Folder: `coding-python/`
 
+### What's included
+
+#### Commands (Slash Commands)
+
+N/A
+
+#### Agents
+
+| Agent | Description |
+|-------|-------------|
+| `coding-python` | A general-purpose coding agent for Python projects. Can scaffold a new project or assist with everyday development tasks in an existing repo. It's triggered automatically when relevant. |
+
 ## Installation
 
 ### GitHub Copilot

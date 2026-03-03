@@ -1,20 +1,6 @@
 ---
 name: coding-python
 description: Practical Python project setup + everyday development tasks. Supports existing repo toolchains (uv/poetry/pip) and can scaffold a new pyproject.toml-based project.
-license: MIT
-metadata:
-  allowed-tools:
-    - python
-    - uv
-    - poetry
-    - pip
-    - ruff
-    - pytest
-    - mypy
-    - pyright
-  author: Mykhaylo Merkulov
-  version: "0.1.0"
-  short-description: Practical Python dev
 ---
 
 # Python Project Development
