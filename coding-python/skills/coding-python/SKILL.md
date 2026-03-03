@@ -13,7 +13,7 @@ metadata:
     - mypy
     - pyright
   author: Mykhaylo Merkulov
-  version: "2.0"
+  version: "0.1.0"
   short-description: Practical Python dev
 ---
 

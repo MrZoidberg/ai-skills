@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "coding-python",
-      "source": "./plugins/coding-python",
+      "source": "./coding-python",
       "description": "Practical Python project setup + everyday development tasks. Supports existing repo toolchains (uv/poetry/pip) and can scaffold a new pyproject.toml-based project."
     }
   ]
