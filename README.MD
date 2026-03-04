@@ -15,7 +15,7 @@ Learn more:
 
 | Skill | Version | Codex | Copilot | Claude Code | Antigravity |
 | --- | --- | --- | --- | --- | --- |
-| `coding-python` | `2.0` | Yes | Yes (installer) | Yes (installer) | N/A |
+| `coding-python` | `0.1.0` | Yes | Yes (installer) | Yes (installer) | N/A |
 
 ---
 
@@ -60,7 +60,7 @@ or put contents of `coding-python` folder to `~/.copilot/skills/`
 OpenAI Codex doesn't have a built-in plugin system, but you can use individual plugins README instructions to install them or use universal installer script:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --system codex --scope system --plugin {PLUGIN_NAME} -y
+npx skills-installer install @MrZoidberg/ai-skills/{plugin}/skills/{skill} --client codex
 ```
 
 ## References
