@@ -90,6 +90,7 @@ npx skills-installer install @MrZoidberg/ai-skills/{plugin}/skills/{skill} --cli
 
 - [Copilot Plugins installation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing)
 - [Copilot CLI plugins installation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing)
+- [Codex plugins installation](https://developers.openai.com/codex/plugins#install-and-use-a-plugin)
 
 ---
 
