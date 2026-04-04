@@ -1,0 +1,24 @@
+{
+	"name": "brainstorming",
+	"description": "Structured approach to brainstorming and design. Guides users through clarifying questions, proposing approaches, and writing design docs. Includes a visual companion for sketching ideas.",
+	"version": "0.1.0",
+	"author": {
+		"name": "Mykhaylo Merkulov",
+        "email": "mike@merkulov.me"
+	},
+	"repository": "https://github.com/MrZoidberg/ai-skills",
+	"license": "MIT",
+	"keywords": [
+		"brainstorming",
+		"design",
+		"ideas",
+		"visual",
+		"mockups",
+		"sketching",
+		"planning",
+		"specs",
+		"documentation"],
+	"skills": [
+		"./skills/brainstorming"
+	]
+}
