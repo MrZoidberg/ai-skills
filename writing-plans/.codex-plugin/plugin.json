@@ -1,0 +1,37 @@
+{
+  "name": "writing-plans",
+  "version": "0.1.0",
+  "description": "Create implementation plans from approved specs before code changes begin, with reviewer subagent checks.",
+  "author": {
+    "name": "Jesse Vincent / obra"
+  },
+  "repository": "https://github.com/MrZoidberg/ai-skills",
+  "license": "MIT",
+  "keywords": [
+    "planning",
+    "implementation-plans",
+    "specs",
+    "tdd",
+    "task-breakdown",
+    "documentation",
+    "agentic-development"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Writing Plans",
+    "shortDescription": "Turn approved specs into reviewed implementation plans.",
+    "longDescription": "Write detailed, test-driven implementation plans from approved design docs or requirements, with file maps, bite-sized tasks, commands, expected results, and reviewer subagent checks.",
+    "developerName": "Jesse Vincent / obra",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://github.com/MrZoidberg/ai-skills",
+    "defaultPrompt": [
+      "Use writing-plans to create an implementation plan from this spec.",
+      "Use writing-plans to break this approved design into testable tasks.",
+      "Use writing-plans before implementing these requirements."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

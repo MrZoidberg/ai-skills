@@ -15,8 +15,9 @@ Learn more:
 
 | Plugin | Version | Codex | Copilot | Claude Code | Antigravity |
 | --- | --- | --- | --- | --- | --- |
-| `coding-python` | `0.1.0` | Yes | Yes (installer) | Yes (installer) | N/A |
-| `brainstorming` | `0.1.0` | Yes | Yes (installer) | Yes (installer) | N/A |
+| `coding-python` | `0.2.0` | Yes | Yes (installer) | Yes (installer) | N/A |
+| `brainstorming` | `0.1.1` | Yes | Yes (installer) | Yes (installer) | N/A |
+| `writing-plans` | `0.1.0` | Yes | Yes (installer) | Yes (installer) | N/A |
 
 ---
 
@@ -66,6 +67,30 @@ N/A
 | Skill | Description |
 |-------|-------------|
 | `brainstorming` | A general-purpose brainstorming and design skill. Guides users through clarifying questions, proposing approaches, and writing design docs. It can be triggered automatically when relevant or invoked directly. |
+
+## Plugin: `writing-plans`
+
+Create implementation plans from approved specs before code changes begin.
+
+Use it for:
+
+- Turning an approved design doc, issue, PRD, or concrete requirements into a task-by-task implementation plan.
+- Creating test-first task breakdowns with exact files, commands, expected results, and reviewer subagent checks.
+- Continuing the `brainstorming` workflow after the design has been approved.
+
+Folder: `writing-plans/`
+
+### What's included
+
+#### Commands (Slash Commands)
+
+N/A
+
+#### Skills
+
+| Skill | Description |
+|-------|-------------|
+| `writing-plans` | Creates detailed, executable implementation plans from approved specs or concrete requirements. It routes back to `brainstorming` when requirements still need discovery or approval. |
 
 ## Installation
 
