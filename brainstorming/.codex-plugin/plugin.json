@@ -1,0 +1,39 @@
+{
+  "name": "brainstorming",
+  "version": "0.1.1",
+  "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, proposing approaches, and writing design docs. Includes a visual companion for sketching ideas.",
+  "author": {
+    "name": "obra/superpowers"    
+  },
+  "repository": "https://github.com/MrZoidberg/ai-skills",
+  "license": "MIT",
+  "keywords": [
+    "brainstorming",
+    "design",
+    "ideas",
+    "visual",
+    "mockups",
+    "sketching",
+    "planning",
+    "specs",
+    "documentation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Brainstorming",
+    "shortDescription": "Use structured brainstorming and design workflows.",
+    "longDescription": "Clarify goals, explore solution approaches, compare tradeoffs, and produce design docs with optional visual sketching support.",
+    "developerName": "obra/superpowers",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://github.com/MrZoidberg/ai-skills",
+    "defaultPrompt": [
+      "Use brainstorming to explore approaches for this feature.",
+      "Use brainstorming to turn this idea into a design doc.",
+      "Use brainstorming to sketch and compare product directions."
+    ],
+    "brandColor": "#7C3AED"
+  }
+}

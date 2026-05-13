@@ -1,0 +1,48 @@
+{
+  "name": "coding-python",
+  "version": "0.1.0",
+  "description": "Practical Python project setup + everyday development tasks. Supports existing repo toolchains (uv/poetry/pip) and can scaffold a new pyproject.toml-based project.",
+  "author": {
+    "name": "Mykhaylo Merkulov",
+    "email": "mike@merkulov.me"
+  },
+  "repository": "https://github.com/MrZoidberg/ai-skills",
+  "license": "MIT",
+  "keywords": [
+    "python",
+    "pyproject",
+    "pyproject-toml",
+    "project-setup",
+    "scaffolding",
+    "uv",
+    "poetry",
+    "pip",
+    "ruff",
+    "pytest",
+    "mypy",
+    "pyright",
+    "type-checking",
+    "linting",
+    "formatting",
+    "pep-723",
+    "scripts"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Coding Python",
+    "shortDescription": "Use practical Python project setup and development workflows.",
+    "longDescription": "Set up Python projects, work with existing uv, Poetry, or pip toolchains, add dependencies, run tests, format and lint code, and scaffold pyproject.toml-based projects.",
+    "developerName": "Mykhaylo Merkulov",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://github.com/MrZoidberg/ai-skills",
+    "defaultPrompt": [
+      "Use Coding Python to set up this project.",
+      "Use Coding Python to add tests and run the Python toolchain.",
+      "Use Coding Python to scaffold a new pyproject.toml project."
+    ],
+    "brandColor": "#3776AB"
+  }
+}

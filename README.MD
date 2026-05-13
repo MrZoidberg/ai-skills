@@ -80,6 +80,12 @@ Add the marketplace using Copilot CLI:
 
 ### OpenAI Codex
 
+Add the marketplace using Codex CLI:
+
+```bash
+codex plugin marketplace add MrZoidberg/ai-skills
+```
+
 Install them or use universal installer script:
 
 ```bash
