@@ -1,11 +1,13 @@
 # Python Coding Plugin
 
-Practical Python project setup + everyday development tasks.
+Practical Python project setup, modern tooling, and everyday development tasks.
 
 Use it for:
 
-- Bootstrapping a new `pyproject.toml`-based Python project.
-- Day-to-day tasks in an existing repo (tests, formatting/linting, adding deps, basic type-checking).
+- Bootstrapping a new `pyproject.toml`-based Python project with `uv`, `ruff`, `ty`, and `pytest`.
+- Day-to-day tasks in an existing repo: tests, formatting/linting, adding deps, basic type-checking, builds.
+- Writing PEP 723 standalone scripts.
+- Migrating legacy Python tooling when explicitly requested.
 
 Folder: `coding-python/`
 
@@ -19,7 +21,21 @@ N/A
 
 | Agent | Description |
 |-------|-------------|
-| `coding-python` | A general-purpose coding agent for Python projects. Can scaffold a new project or assist with everyday development tasks in an existing repo. It's triggered automatically when relevant. |
+| `coding-python` | A general-purpose coding agent for Python projects. Can scaffold a new project, assist with everyday development tasks, create PEP 723 scripts, or migrate legacy tooling when requested. It's triggered automatically when relevant. |
+
+### Bundled Resources
+
+- `references/` contains focused guides for uv, pyproject.toml, ruff, pytest, PEP 723 scripts, migration, and optional hardening.
+- `templates/` contains starter `pyproject.toml` and PEP 723 script templates.
+- `hooks/` contains future-ready PATH shims that can steer bare `python`, `pip`, `pipx`, and `uv pip` commands toward uv workflows in runtimes that support plugin hooks.
+
+## Attribution
+
+This plugin incorporates ideas and hook patterns from Trail of Bits' `modern-python` plugin:
+
+- https://github.com/trailofbits/skills/tree/main/plugins/modern-python
+
+The upstream Trail of Bits skills repository is licensed under CC-BY-SA-4.0. This repository's own code remains under its stated license.
 
 ## Installation
 

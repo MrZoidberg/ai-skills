@@ -2,6 +2,7 @@
 # requires-python = ">=3.12"
 # dependencies = [
 #   "httpx>=0.27",
+#   "rich>=13",
 # ]
 # ///
 from __future__ import annotations

@@ -2,16 +2,29 @@
 name = "my-project"
 version = "0.1.0"
 description = ""
-# readme = "README.md"  # Uncomment if you have a README.
+readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
 
-# PEP 735 dependency groups (supported by uv, and increasingly by other tooling)
 [dependency-groups]
 dev = [
-  "ruff>=0.6",
+  { include-group = "lint" },
+  { include-group = "test" },
+  { include-group = "type" },
+  { include-group = "audit" },
+]
+lint = [
+  "ruff>=0.12",
+]
+test = [
   "pytest>=8",
-  "pytest-cov>=5",
+  "pytest-cov>=6",
+]
+type = [
+  "ty>=0.0.1a20",
+]
+audit = [
+  "pip-audit>=2.8",
 ]
 
 [tool.ruff]
@@ -19,17 +32,34 @@ line-length = 100
 target-version = "py312"
 
 [tool.ruff.lint]
-# Practical default set for everyday projects.
-# Expand if the repo wants stricter rules.
-select = ["E", "F", "I", "B", "UP"]
+# Strict enough for new projects without drowning routine work in docstring noise.
+select = ["ALL"]
+ignore = [
+  "COM812", # Conflicts with formatter.
+  "D",      # Add docstring rules only when the project wants them.
+  "ISC001", # Conflicts with formatter.
+]
 
 [tool.pytest.ini_options]
 addopts = [
+  "--strict-config",
   "--strict-markers",
   "--cov=REPLACE_WITH_IMPORT_PACKAGE",
   "--cov-report=term-missing",
+  "--cov-fail-under=80",
 ]
+testpaths = ["tests"]
+
+[tool.ty.environment]
+python-version = "3.12"
+
+[tool.ty.terminal]
+error-on-warning = true
+
+[tool.ty.rules]
+possibly-unresolved-reference = "error"
+unused-ignore-comment = "warn"
 
 [build-system]
-requires = ["hatchling>=1.25"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.8"]
+build-backend = "uv_build"

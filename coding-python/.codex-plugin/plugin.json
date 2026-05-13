@@ -1,7 +1,7 @@
 {
   "name": "coding-python",
-  "version": "0.1.0",
-  "description": "Practical Python project setup + everyday development tasks. Supports existing repo toolchains (uv/poetry/pip) and can scaffold a new pyproject.toml-based project.",
+  "version": "0.2.0",
+  "description": "Practical Python project setup, modern uv/ruff/ty/pytest workflows, PEP 723 scripts, and careful migration from legacy Python tooling.",
   "author": {
     "name": "Mykhaylo Merkulov",
     "email": "mike@merkulov.me"
@@ -15,23 +15,31 @@
     "project-setup",
     "scaffolding",
     "uv",
+    "uv-build",
     "poetry",
     "pip",
     "ruff",
+    "ty",
     "pytest",
+    "pytest-cov",
     "mypy",
     "pyright",
     "type-checking",
     "linting",
     "formatting",
     "pep-723",
+    "pep-735",
+    "migration",
+    "pip-audit",
+    "dependabot",
     "scripts"
   ],
   "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Coding Python",
-    "shortDescription": "Use practical Python project setup and development workflows.",
-    "longDescription": "Set up Python projects, work with existing uv, Poetry, or pip toolchains, add dependencies, run tests, format and lint code, and scaffold pyproject.toml-based projects.",
+    "shortDescription": "Use modern Python setup and repo-first development workflows.",
+    "longDescription": "Set up Python projects, work with existing uv, Poetry, or pip toolchains, add dependencies, run tests, format and lint code, type-check with ty, create PEP 723 scripts, migrate legacy tooling when requested, and scaffold pyproject.toml-based projects.",
     "developerName": "Mykhaylo Merkulov",
     "category": "Developer Tools",
     "capabilities": [
@@ -41,7 +49,8 @@
     "defaultPrompt": [
       "Use Coding Python to set up this project.",
       "Use Coding Python to add tests and run the Python toolchain.",
-      "Use Coding Python to scaffold a new pyproject.toml project."
+      "Use Coding Python to scaffold a new pyproject.toml project.",
+      "Use Coding Python to migrate this project to uv, ruff, and ty."
     ],
     "brandColor": "#3776AB"
   }

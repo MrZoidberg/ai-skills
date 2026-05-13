@@ -1,0 +1,16 @@
+{
+  "description": "Intercept legacy Python/pip commands via PATH shims and suggest uv alternatives",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'bash \"${CODEX_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:-$PWD}}}/hooks/setup-shims.sh\"'"
+          }
+        ]
+      }
+    ]
+  }
+}
