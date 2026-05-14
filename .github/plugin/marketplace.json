@@ -1,0 +1,40 @@
+{
+  "name": "zoid-ai-skills",
+  "owner": {
+    "name": "Mykhaylo Merkulov",
+    "email": "mike@merkulov.me"
+  },
+  "metadata": {
+    "description": "Personal collection of agent skills: small, reusable bundles of instructions for AI coding agents.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "coding-python",
+      "description": "Practical Python project setup, modern uv/ruff/ty/pytest workflows, PEP 723 scripts, and careful migration from legacy Python tooling.",
+      "version": "0.2.0",
+      "source": "./coding-python",
+      "license": "MIT",
+      "category": "Developer Tools",
+      "keywords": ["python", "uv", "ruff", "pytest", "type-checking", "linting"]
+    },
+    {
+      "name": "brainstorming",
+      "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, proposing approaches, and writing design docs.",
+      "version": "0.1.1",
+      "source": "./brainstorming",
+      "license": "MIT",
+      "category": "Productivity",
+      "keywords": ["brainstorming", "design", "planning", "specs", "documentation"]
+    },
+    {
+      "name": "writing-plans",
+      "description": "Create implementation plans from approved specs before code changes begin, with reviewer subagent checks.",
+      "version": "0.1.0",
+      "source": "./writing-plans",
+      "license": "MIT",
+      "category": "Developer Tools",
+      "keywords": ["planning", "implementation-plans", "tdd", "task-breakdown"]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "coding-python",
+  "version": "0.2.0",
+  "description": "Practical Python project setup, modern uv/ruff/ty/pytest workflows, PEP 723 scripts, and careful migration from legacy Python tooling.",
+  "author": {
+    "name": "Mykhaylo Merkulov",
+    "email": "mike@merkulov.me"
+  },
+  "repository": "https://github.com/MrZoidberg/ai-skills",
+  "license": "MIT",
+  "keywords": [
+    "python",
+    "pyproject",
+    "uv",
+    "ruff",
+    "pytest",
+    "type-checking",
+    "linting",
+    "formatting",
+    "pep-723",
+    "migration"
+  ],
+  "category": "Developer Tools",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "writing-plans",
+  "version": "0.1.0",
+  "description": "Create implementation plans from approved specs before code changes begin, with reviewer subagent checks.",
+  "author": {
+    "name": "Jesse Vincent / obra"
+  },
+  "repository": "https://github.com/MrZoidberg/ai-skills",
+  "license": "MIT",
+  "keywords": [
+    "planning",
+    "implementation-plans",
+    "specs",
+    "tdd",
+    "task-breakdown",
+    "documentation",
+    "agentic-development"
+  ],
+  "category": "Developer Tools",
+  "skills": "./skills/"
+}

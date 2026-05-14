@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -lc 'bash \"${CODEX_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:-$PWD}}}/hooks/setup-shims.sh\"'"
+            "command": "bash -lc 'bash \"${CODEX_PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:-$PWD}}}}/hooks/setup-shims.sh\"'"
           }
         ]
       }

@@ -94,13 +94,37 @@ N/A
 
 ## Installation
 
-### GitHub Copilot
+### GitHub Copilot CLI
 
-Add the marketplace using Copilot CLI:
+**Option A – Install via the plugin marketplace (recommended):**
+
+```bash
+# Register the marketplace (one-time)
+copilot plugin marketplace add MrZoidberg/ai-skills
+
+# Install a plugin, e.g.:
+copilot plugin install coding-python@zoid-ai-skills
+```
+
+Or from an interactive Copilot session:
 
 ```
 /plugin marketplace add MrZoidberg/ai-skills
-/plugin install {plugin}@zoid-ai-skills, e.g. /plugin install coding-python@zoid-ai-skills
+/plugin install coding-python@zoid-ai-skills
+```
+
+**Option B – Install a skill directly with `gh skill`:**
+
+```bash
+gh skill install MrZoidberg/ai-skills coding-python
+gh skill install MrZoidberg/ai-skills brainstorming
+gh skill install MrZoidberg/ai-skills writing-plans
+```
+
+**Option C – Universal installer script (macOS/Linux):**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/MrZoidberg/ai-skills/master/install.sh | sh -s -- --plugin coding-python --system copilot --scope user
 ```
 
 ### OpenAI Codex
@@ -119,8 +143,10 @@ npx skills-installer install @MrZoidberg/ai-skills/{plugin}/skills/{skill} --cli
 
 ## References
 
-- [Copilot Plugins installation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing)
-- [Copilot CLI plugins installation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing)
+- [Copilot CLI plugin installation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing)
+- [Copilot CLI plugin creation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-creating)
+- [Copilot CLI plugin marketplace creation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-marketplace)
+- [GitHub Copilot agent skills](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills)
 - [Codex plugins installation](https://developers.openai.com/codex/plugins#install-and-use-a-plugin)
 
 ---
