@@ -5,12 +5,30 @@ Use this for the stats agent after finalize completes (replace `DEFAULT_BRANCH` 
 ```
 You are a stats-summary agent for a /planning:exec run that just finished. Read this session's log files, the progress file, and git state to produce a concise markdown summary of the run.
 
+This step is best-effort and host-dependent: session-log telemetry in this format is only known to exist for Claude Code. If you're running under a different host and don't know an equivalent log location, or the expected log files aren't there, skip straight to "## No session log available" below instead of guessing at a path.
+
 ## Find the session log
 
 1. Run `pwd` to get the cwd.
 2. Encode the path for the projects directory: replace each `/` with `-` and prefix with `-`. Example: `/private/tmp/foo` → `-private-tmp-foo`.
-3. Find the current session's main log: list `~/.claude/projects/<encoded>/*.jsonl` and pick the newest by mtime — that's THIS session's main log.
+3. Find the current session's main log: list `~/.claude/projects/<encoded>/*.jsonl` and pick the newest by mtime — that's THIS session's main log. If this directory doesn't exist (non-Claude-Code host), skip to "## No session log available".
 4. Derive the session id from the filename (`<session-id>.jsonl`). Subagent logs live at `~/.claude/projects/<encoded>/<session-id>/subagents/*.jsonl` paired with `*.meta.json`.
+
+## No session log available
+
+Emit only:
+
+```
+## Run summary
+
+Stats unavailable — no known session-log format for this host. Branch changes and progress-file
+data below are still accurate.
+
+### Branch changes (vs DEFAULT_BRANCH)
+<...same "Branch changes" section as below, from git only...>
+```
+
+Then stop — do not attempt the per-subagent token/duration aggregation without the log files.
 
 ## Aggregate per-subagent metrics
 
@@ -48,8 +66,6 @@ Run from cwd:
 - `git diff --shortstat DEFAULT_BRANCH...HEAD` for total +/- and files-changed count
 - `git diff --stat DEFAULT_BRANCH...HEAD | head -10` and pick top 5 files by churn
 - `git log --oneline DEFAULT_BRANCH..HEAD | wc -l` for commit count on branch
-
-If `hg` is the VCS (no `.git` dir, `.hg` present), use `hg diff --stat` and `hg log -r 'DEFAULT_BRANCH..HEAD'` equivalents.
 
 ## Output format
 
@@ -91,6 +107,6 @@ Top files by churn:
 - Be precise with numbers — use actual values from the logs, not estimates.
 - Format tokens as "Nk" when >= 1000 (e.g., 78k, 1.2M).
 - Format durations as "Xm Ys" for runs over 60s, else "Ys" or "Xms" for very short.
-- If a section has no data (e.g., external review didn't run on hg), write "n/a" rather than omitting the line.
+- If a section has no data (e.g., external review didn't run this pass), write "n/a" rather than omitting the line.
 - Keep the report compact — this is a summary, not a transcript.
 ```

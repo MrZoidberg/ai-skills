@@ -83,10 +83,10 @@ def read_plan_from_stdin() -> str:
 
 
 def review_disabled() -> bool:
-    """report whether interactive plan review is disabled via PLANNING_DISABLE_REVDIFF.
+    """report whether interactive plan review is disabled via PLANNING_DISABLE_PLANNOTATOR.
     set this on a remote client (claude /remote-control), where the editor overlay would
     open on the host terminal the remote client can't see and block the session."""
-    return bool(os.environ.get("PLANNING_DISABLE_REVDIFF"))
+    return bool(os.environ.get("PLANNING_DISABLE_PLANNOTATOR"))
 
 
 def make_response(decision: str, reason: str = "") -> str:
@@ -261,7 +261,7 @@ def run_file_mode(plan_file: Path) -> None:
 def run_hook_mode() -> None:
     """hook mode: read plan from stdin JSON, output hook response."""
     if review_disabled():
-        print(make_response("ask", "plan review disabled via PLANNING_DISABLE_REVDIFF"))
+        print(make_response("ask", "plan review disabled via PLANNING_DISABLE_PLANNOTATOR"))
         return
     plan_content = read_plan_from_stdin()
     if not plan_content:
@@ -429,10 +429,10 @@ def run_tests() -> None:
 
     class TestDisableReview(unittest.TestCase):
         def setUp(self) -> None:
-            os.environ["PLANNING_DISABLE_REVDIFF"] = "1"
+            os.environ["PLANNING_DISABLE_PLANNOTATOR"] = "1"
 
         def tearDown(self) -> None:
-            os.environ.pop("PLANNING_DISABLE_REVDIFF", None)
+            os.environ.pop("PLANNING_DISABLE_PLANNOTATOR", None)
 
         def test_review_disabled_flag(self) -> None:
             self.assertTrue(review_disabled())

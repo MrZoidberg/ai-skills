@@ -28,13 +28,13 @@
       "keywords": ["brainstorming", "design", "architecture", "planning", "specs", "documentation"]
     },
     {
-      "name": "writing-plans",
-      "description": "Create implementation plans from approved specs before code changes begin, with reviewer subagent checks.",
+      "name": "planning",
+      "description": "Structured implementation planning, interactive annotation review via Plannotator (with a local fallback), and plan execution with an adaptive review cascade sized to the plan.",
       "version": "0.1.0",
-      "source": "./writing-plans",
+      "source": "./planning",
       "license": "MIT",
       "category": "Developer Tools",
-      "keywords": ["planning", "implementation-plans", "tdd", "task-breakdown"]
+      "keywords": ["planning", "implementation-plans", "task-breakdown", "code-review", "worktrees"]
     }
   ]
 }

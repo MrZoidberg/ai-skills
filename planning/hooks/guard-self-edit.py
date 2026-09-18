@@ -1,4 +1,4 @@
-"""PreToolUse guard: refuse any write that targets the brainstorming plugin's own files.
+"""PreToolUse guard: refuse any write that targets the planning plugin's own files.
 
 Reads the PreToolUse hook payload as JSON on stdin.
 
@@ -11,7 +11,7 @@ this hook uses it instead of the (incompatible) JSON decision payloads. Copilot
 treats *any* other non-zero preToolUse exit as a deny, which would block every
 tool call in the session -- hence the blanket try/except that exits 0.
 
-Set BRAINSTORM_ALLOW_SELF_EDIT=1 to bypass the guard for deliberate maintenance.
+Set PLANNING_ALLOW_SELF_EDIT=1 to bypass the guard for deliberate maintenance.
 """
 
 import json
@@ -60,7 +60,7 @@ MUTATING = re.compile(
     re.IGNORECASE,
 )
 
-ALLOWED_BASENAMES = {"brainstorm-rules.md"}
+ALLOWED_BASENAMES = {"planning-rules.md"}
 
 
 def first_env(names):
@@ -185,19 +185,19 @@ def allowed(path, data_dir):
 
 def deny(target):
     sys.stderr.write(
-        "Blocked by the brainstorming plugin's self-modification guard: "
+        "Blocked by the planning plugin's self-modification guard: "
         f"{target}\n"
-        "This skill must never modify its own files (SKILL.md, scripts, references, "
-        "hooks, plugin manifests). Custom behaviour belongs in a rules file at "
-        ".agents/brainstorm-rules.md instead. To change the skill itself, propose a "
-        "plan with the planning skill, or re-run with BRAINSTORM_ALLOW_SELF_EDIT=1 "
-        "for deliberate maintenance.\n"
+        "This skill must never modify its own files (SKILL.md, commands, scripts, "
+        "references, hooks, plugin manifests). Custom behaviour belongs in a rules "
+        "file at .agents/planning-rules.md instead. To change the skill itself, "
+        "propose a plan with the planning skill's own make command, or re-run with "
+        "PLANNING_ALLOW_SELF_EDIT=1 for deliberate maintenance.\n"
     )
     return 2
 
 
 def main():
-    if os.environ.get("BRAINSTORM_ALLOW_SELF_EDIT", "").strip().lower() not in ("", "0", "false", "no"):
+    if os.environ.get("PLANNING_ALLOW_SELF_EDIT", "").strip().lower() not in ("", "0", "false", "no"):
         return 0
 
     raw = sys.stdin.read()

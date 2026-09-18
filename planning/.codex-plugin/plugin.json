@@ -1,0 +1,39 @@
+{
+  "name": "planning",
+  "version": "0.1.0",
+  "description": "Structured implementation planning, interactive annotation review via Plannotator (with a local fallback), and plan execution with an adaptive review cascade sized to the plan.",
+  "author": {
+    "name": "Mike Merkulov (fork from Umputun)"
+  },
+  "homepage": "https://github.com/MrZoidberg/ai-skills",
+  "repository": "https://github.com/MrZoidberg/ai-skills",
+  "license": "MIT",
+  "keywords": [
+    "planning",
+    "implementation-plans",
+    "task-breakdown",
+    "code-review",
+    "worktrees"
+  ],
+  "commands": "./commands/",
+  "agents": "./agents/",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "Planning",
+    "shortDescription": "Turn a design into a task-by-task plan, review it, then execute it",
+    "longDescription": "Structured implementation planning (make) and autonomous plan execution (exec) for non-trivial, multi-file changes. Plan review defers to Plannotator when installed, falling back to a bundled annotation script otherwise. The review cascade during execution scales to plan size, and external adversarial review is always opt-in, never automatic. Supports project and user level custom rules, and ships a PreToolUse hook that prevents the skill from modifying its own files.",
+    "developerName": "Mike Merkulov (fork from Umputun)",
+    "category": "Engineering",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://github.com/MrZoidberg/ai-skills",
+    "defaultPrompt": [
+      "Use planning to write an implementation plan for this feature.",
+      "Use planning to execute docs/plans/20260101-example.md.",
+      "Review this implementation plan before I start building it."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

@@ -1,6 +1,6 @@
 ---
 name: plan-review
-description: "Use this agent PROACTIVELY after creating implementation plans with /planning:make to review plan quality before execution. Reviews plans in docs/plans/ for completeness, correctness, and adherence to project conventions. If plan file is unclear from context, asks user which plan to review. <example>Context: User just created a plan with /planning:make. user: \"Let's review this plan before we start\" assistant: \"I'll use the plan-review agent to verify the plan solves the problem correctly and follows conventions.\" <commentary>Plan was just created, review ensures quality before implementation begins.</commentary></example> <example>Context: User wants to validate an existing plan. user: \"Check the feature-x plan for over-engineering\" assistant: \"Let me use the plan-review agent to analyze the plan for unnecessary complexity.\" <commentary>Specific review focus requested, agent will emphasize over-engineering detection.</commentary></example> <example>Context: User mentions a plan without specifying which one. user: \"Review my plan\" assistant: \"I'll use the plan-review agent. It will identify available plans and ask which one to review.\" <commentary>When plan is ambiguous, agent asks for clarification.</commentary></example>"
+description: "Use this agent for non-trivial implementation plans created with /planning:make — multi-file changes, new features, ambiguous scope — to review plan quality before execution. Not worth invoking for a plan behind a one-line fix or an obviously small, well-understood change. Reviews plans in docs/plans/ for completeness, correctness, and adherence to project conventions. If plan file is unclear from context, asks user which plan to review. <example>Context: User just created a plan with /planning:make. user: \"Let's review this plan before we start\" assistant: \"I'll use the plan-review agent to verify the plan solves the problem correctly and follows conventions.\" <commentary>Plan was just created, review ensures quality before implementation begins.</commentary></example> <example>Context: User wants to validate an existing plan. user: \"Check the feature-x plan for over-engineering\" assistant: \"Let me use the plan-review agent to analyze the plan for unnecessary complexity.\" <commentary>Specific review focus requested, agent will emphasize over-engineering detection.</commentary></example> <example>Context: User mentions a plan without specifying which one. user: \"Review my plan\" assistant: \"I'll use the plan-review agent. It will identify available plans and ask which one to review.\" <commentary>When plan is ambiguous, agent asks for clarification.</commentary></example>"
 model: opus
 color: cyan
 tools: Read, Glob, Grep, Bash
@@ -17,14 +17,14 @@ You are an expert plan reviewer specializing in validating implementation plans 
 Before starting the review, run this command via Bash tool to check for user-provided custom rules:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/resolve-rules.sh planning-rules.md ${CLAUDE_PLUGIN_DATA}
+python3 ${CODEX_PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}}}/scripts/resolve-rules.py planning-rules.md
 ```
 
-If the output is non-empty, treat it as additional review criteria that supplement (not replace) the built-in review checklist below. Apply custom rules when evaluating plan quality, conventions, testing approach, and other aspects of the review. Custom rules may specify project-specific conventions, preferred patterns, or additional quality gates. See `${CLAUDE_PLUGIN_ROOT}/references/custom-rules.md` for full documentation on the rules mechanism.
+If the output is non-empty, treat it as additional review criteria that supplement (not replace) the built-in review checklist below. Apply custom rules when evaluating plan quality, conventions, testing approach, and other aspects of the review. Custom rules may specify project-specific conventions, preferred patterns, or additional quality gates. See `${CODEX_PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}}}/references/custom-rules.md` for full documentation on the rules mechanism.
 
 ## Plan Structure Reference
 
-The plan template is defined in `${CLAUDE_PLUGIN_ROOT}/commands/make.md` (referred to as "plan template" below).
+The plan template is defined in `${CODEX_PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}}}/commands/make.md` (referred to as "plan template" below).
 
 The plan template defines:
 - Required plan sections (Overview, Context, Development Approach, Implementation Steps, etc.)

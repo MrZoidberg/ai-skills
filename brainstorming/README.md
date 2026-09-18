@@ -7,7 +7,7 @@ Use it for:
 - Exploring a feature you have not scoped yet — the skill asks one question at a time instead of dumping a questionnaire on you.
 - Comparing 2-3 implementation approaches with honest trade-offs before you commit to one.
 - Reviewing a design section by section, so a wrong assumption gets caught on page one rather than at the end.
-- Handing a validated design straight to the `writing-plans` plugin.
+- Handing a validated design straight to the `planning` plugin.
 
 Folder: `brainstorming/`
 
@@ -47,7 +47,7 @@ What happens next:
 1. **Understand** — it reads relevant files and recent commits, then asks questions one at a time, preferring multiple choice. Answer them as they come; it will not batch them.
 2. **Explore** — it proposes 2-3 approaches with pros and cons, leading with the one it recommends and explaining why. You pick.
 3. **Design** — it presents the design in 200-300 word sections and checks after each one. Say "no, that's wrong" early; backtracking is expected.
-4. **Next step** — it asks whether to write a plan (hands off to `writing-plans`), enter plan mode, or start implementing.
+4. **Next step** — it asks whether to write a plan (hands off to `planning`), enter plan mode, or start implementing.
 
 Tip: it applies YAGNI aggressively and will push back on scope. If you want the kitchen sink, say so.
 
@@ -132,7 +132,7 @@ A blocked call comes back to the agent as:
 Blocked by the brainstorming plugin's self-modification guard: <path>
 This skill must never modify its own files (SKILL.md, scripts, references, hooks, plugin
 manifests). Custom behaviour belongs in a rules file at .agents/brainstorm-rules.md instead.
-To change the skill itself, propose a plan with the writing-plans skill, or re-run with
+To change the skill itself, propose a plan with the planning skill, or re-run with
 BRAINSTORM_ALLOW_SELF_EDIT=1 for deliberate maintenance.
 ```
 

@@ -1,12 +1,12 @@
 # Review fanout playbook
 
-This file is a playbook for the main orchestrator session — NOT a prompt to spawn into a subagent. Subagents do not have access to the Agent tool in current Claude Code, so the parallel fanout below must be initiated from the main session.
+This file is a playbook for the main orchestrator session — NOT a prompt to spawn into a subagent. Subagents cannot spawn further subagents, so the parallel fanout below must be initiated from the main session.
 
-Resolve placeholders (`DEFAULT_BRANCH`, `PLAN_FILE_PATH`, `PROGRESS_FILE_PATH`, `REVIEW_PHASE`, `RESOLVE_SCRIPT`, `PLUGIN_DATA_DIR`), then follow the instructions below from the main session: launch the specified parallel Agent calls, collect findings from all returned agents, and pass them to the fixer subagent. The orchestrator does NOT fix issues itself — the fixer is a separate subagent that handles fixes.
+Resolve placeholders (`DEFAULT_BRANCH`, `PLAN_FILE_PATH`, `PROGRESS_FILE_PATH`, `REVIEW_PHASE`, `RESOLVE_SCRIPT`, `PLUGIN_DATA_DIR`), then follow the instructions below from the main session: spawn the specified subagents to run concurrently, collect findings from all of them once they've all returned, and pass them to the fixer subagent. The orchestrator does NOT fix issues itself — the fixer is a separate subagent that handles fixes.
 
 ## How to fan out (READ THIS CAREFULLY)
 
-In your NEXT assistant response, emit N Agent tool_use blocks TOGETHER — all N must appear in the same response, no text between them, no pausing to read results. Multiple tool_use blocks in one response run in PARALLEL; tool_use blocks spread across separate responses run SEQUENTIALLY (Nx runtime). The agents are fully independent — no shared state, no ordering. Do NOT use run_in_background. After emitting all N tool calls, stop generating — the orchestrator response ends there, agents run in parallel, and your next response begins after all N return.
+Spawn all N subagents to run concurrently, not one after another — running them sequentially instead of concurrently costs roughly Nx the wall-clock time for no benefit, since the agents are fully independent (no shared state, no ordering between them). Do not start reading any one agent's result until all N have returned.
 
 Each agent prompt MUST include: "CRITICAL: You are a READ-ONLY reviewer. Do NOT run git stash, git checkout, git reset, or any command that modifies the working tree. Other agents run in parallel. Only use git diff, git log, git show, and read files."
 
@@ -45,7 +45,7 @@ Read the progress file at PROGRESS_FILE_PATH for context on previous review iter
 
 Tag every finding with severity (CRITICAL/MAJOR/MINOR) and format each on its own line as: `SEVERITY: file:line — description`."
 
-In your next assistant response, emit 5 Agent tool_use blocks together. Each with `mode: "bypassPermissions"`, `subagent_type: "general-purpose"`, and the assembled prompt for one of the 5 specialists (quality, implementation, testing, simplification, documentation).
+Spawn 5 subagents concurrently — autonomous permissions, general-purpose persona — each given the assembled prompt for one of the 5 specialists (quality, implementation, testing, simplification, documentation).
 
 After ALL 5 agents return, produce a STRICT bullet-list report — no prose summary, no narrative, no "agents converge on" sentences. Format requirements:
 
@@ -67,7 +67,7 @@ Resolve only `quality.txt` and `implementation.txt` using the resolve script. Re
 
 "Report ONLY critical and major issues — bugs, security vulnerabilities, data loss risks, broken functionality, incorrect logic, missing critical error handling. Ignore style, minor improvements, suggestions. Tag every reported finding with severity (CRITICAL or MAJOR) and format each on its own line as: `SEVERITY: file:line — description`."
 
-In your next assistant response, emit 2 Agent tool_use blocks together. Same `mode` and `subagent_type` as comprehensive mode.
+Spawn 2 subagents concurrently, same permissions and persona as comprehensive mode.
 
 After BOTH agents return, produce the same STRICT bullet-list report as comprehensive mode (groupings by severity, exact bullet shape, agent attribution preserved, no prose summary). Additional rule for this mode:
 

@@ -4,7 +4,7 @@ The parent maintains a progress file at `/tmp/progress-<plan-name>.txt` (derived
 
 ## When to write
 
-The parent appends to the progress file at these points using `append-progress.sh` (do not use `cat >>` or direct writes; always append via the script):
+The parent appends to the progress file at these points using `append-progress.py` (do not use `cat >>` or direct writes; always append via the script):
 
 **At start:**
 ```
@@ -46,7 +46,7 @@ Started: <timestamp>
 [decision] task N: <what was decided> — <why: lint rule / plan intent / convention>
 [deviation] task N: <how the result differs from the plan> — <why>
 ```
-The orchestrator greps these markers at completion and reports them to the user (see the exec SKILL completion step), so the user learns every question the run answered on its own and why. The completion collector matches a marker at the start of a line, optionally after the timestamp prefix added by `append-progress.sh`, so markers quoted inside review findings or fixer reports are excluded.
+The orchestrator greps these markers at completion and reports them to the user (see the exec SKILL completion step), so the user learns every question the run answered on its own and why. The completion collector matches a marker at the start of a line, optionally after the timestamp prefix added by `append-progress.py`, so markers quoted inside review findings or fixer reports are excluded.
 
 **At completion:**
 ```

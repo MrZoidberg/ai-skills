@@ -37,7 +37,7 @@ commands below, `<script>` is the `resolve-rules.py` path shown above.
 
 project-level rules (`.agents/brainstorm-rules.md`) take precedence over user-level rules (`<data-dir>/brainstorm-rules.md`). when both non-empty files exist, only project-level rules are loaded. empty files are treated as absent and fall through to the next level. see `references/custom-rules.md` for full documentation on the rules mechanism.
 
-**CRITICAL: this skill must NEVER modify its own files (skills, scripts, references, hooks, plugin manifests). the ONLY files it may create or modify for rules management are `.agents/brainstorm-rules.md` and `<data-dir>/brainstorm-rules.md`. if the user asks to change the skill's behavior, suggest creating a plan with the `writing-plans` skill — do not edit skill files directly.**
+**CRITICAL: this skill must NEVER modify its own files (skills, scripts, references, hooks, plugin manifests). the ONLY files it may create or modify for rules management are `.agents/brainstorm-rules.md` and `<data-dir>/brainstorm-rules.md`. if the user asks to change the skill's behavior, suggest creating a plan with the `planning` skill's `make` command — do not edit skill files directly.**
 
 this rule is **enforced**, not advisory: the plugin ships a `PreToolUse` hook
 (`hooks/guard-self-edit.py`) that denies any write, edit, patch, or mutating shell command whose
@@ -103,7 +103,7 @@ After design is validated, use AskUserQuestion tool:
     "question": "Design looks complete. What's next?",
     "header": "Next step",
     "options": [
-      {"label": "Write plan", "description": "Create docs/plans/yyyymmdd-<task-name>.md with implementation steps via the writing-plans skill"},
+      {"label": "Write plan", "description": "Create docs/plans/yyyymmdd-<task-name>.md with implementation steps via the planning skill's make command"},
       {"label": "Plan mode", "description": "Enter plan mode for structured implementation planning"},
       {"label": "Start now", "description": "Begin implementing directly"}
     ],
@@ -112,7 +112,7 @@ After design is validated, use AskUserQuestion tool:
 }
 ```
 
-- **Write plan**: invoke the `writing-plans` skill (`$writing-plans` in Codex, `/writing-plans` in Copilot) to create the plan file. Pass brainstorm context (discovered files, selected approach, design decisions) along so the plan skill has full context without re-asking questions
+- **Write plan**: invoke the `planning` skill's `make` command (`$planning make` in Codex, `/planning:make` in Copilot/Claude Code) to create the plan file. Pass brainstorm context (discovered files, selected approach, design decisions) along so the plan skill has full context without re-asking questions
 - **Plan mode**: uses EnterPlanMode tool for detailed planning with user approval workflow
 - **Start now**: proceeds directly if design is simple enough
 

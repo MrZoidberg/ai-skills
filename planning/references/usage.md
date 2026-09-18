@@ -9,11 +9,12 @@ The planning plugin has three components: make (plan creation), exec (autonomous
 - invoked automatically by brainstorm when user picks "Write plan"
 
 ### Workflow
+0. **Triage** — for small, well-understood, single-file/obvious requests, asks whether the user actually wants a full plan or just the change made directly; skipped for requests that are already clearly substantial
 1. **Step 0** — parses intent (feature, bug fix, refactor, migration) and explores codebase for context
 2. **Step 1** — asks focused questions one at a time: goal, scope, constraints, testing approach, title
 3. **Step 1.5** — proposes 2-3 implementation approaches with trade-offs (skipped if obvious)
 4. **Step 2** — creates plan file at `docs/plans/yyyymmdd-<task-name>.md`
-5. **Step 3** — offers next steps: interactive review, auto review, implement, or done
+5. **Step 3** — reports the task count and, for small plans, notes that formal review may be optional, then offers next steps: interactive review, auto review, implement, or done
 
 ### Examples
 ```
@@ -36,16 +37,17 @@ The planning plugin has three components: make (plan creation), exec (autonomous
 - "exec", "execute plan", "run plan"
 
 ### Workflow
-1. Resolves plan file (from argument or picks from `docs/plans/`)
+1. Resolves plan file (from argument or picks from `docs/plans/`); for a 1-task plan, confirms the user wants the full pipeline rather than a direct change
 2. Asks about worktree isolation (worktree vs current directory)
 3. Creates a feature branch
 4. Executes tasks sequentially — one subagent per task, commits after each
-5. Runs multi-phase review: comprehensive (iteration 1) then critical re-check loop → code smells → external review → critical-only
-6. Optional finalize: rebase and squash commits
-7. Stats summary: aggregate per-phase tokens/duration + git diff stats and report
+5. Recommends a review route based on task count (`plan_size_threshold`, default 4) and asks the user to confirm or override: **simplified** (one combined review pass) or **full** (comprehensive → critical re-check loop → code smells → critical-only)
+6. Before external review, always asks the user first — it never runs automatically
+7. Optional finalize: rebase and squash commits
+8. Stats summary (best-effort, host-dependent): aggregate per-phase tokens/duration + git diff stats and report; skipped with a note if the current host has no known session-log format
 
 ### Configuration
-Set via `userConfig` in plugin.json (prompted at install):
+Set via `userConfig` in plugin.json (prompted at install on Claude Code). On Codex/Copilot CLI, where there's no marketplace `userConfig` prompt, just tell the skill your preference in chat (e.g. "skip external review", "use 2 review iterations", "plans go in docs/proposals instead") — these are read as natural-language preferences applied for the session, not injected config:
 
 | Key | Default | Description |
 |-----|---------|-------------|
@@ -55,18 +57,19 @@ Set via `userConfig` in plugin.json (prompted at install):
 | `external_review_iterations` | `10` | max external review iterations |
 | `finalize_enabled` | `true` | run rebase + squash phase |
 | `plans_dir` | `docs/plans` | directory for plan files |
+| `plan_size_threshold` | `4` | task count at/below which the simplified review route is recommended |
 
 ### Customization
 Prompts and agent definitions use a three-layer override chain:
-1. Project: `.claude/exec-plan/prompts/` and `.claude/exec-plan/agents/`
-2. User: `$CLAUDE_PLUGIN_DATA/prompts/` and `$CLAUDE_PLUGIN_DATA/agents/`
+1. Project: `.agents/exec-plan/prompts/` and `.agents/exec-plan/agents/`
+2. User: `${CODEX_PLUGIN_DATA:-${COPILOT_PLUGIN_DATA:-${CLAUDE_PLUGIN_DATA:-$PLUGIN_DATA}}}/prompts/` and `${CODEX_PLUGIN_DATA:-${COPILOT_PLUGIN_DATA:-${CLAUDE_PLUGIN_DATA:-$PLUGIN_DATA}}}/agents/`
 3. Bundled defaults
 
-Nothing is copied anywhere automatically. Installs before planning 3.10.0 did seed `$CLAUDE_PLUGIN_DATA` with
+Nothing is copied anywhere automatically. Installs before planning 3.10.0 did seed `${CODEX_PLUGIN_DATA:-${COPILOT_PLUGIN_DATA:-${CLAUDE_PLUGIN_DATA:-$PLUGIN_DATA}}}` with
 copies of every bundled prompt and agent — those copies still shadow the bundled defaults and no longer track
 upgrades, so check that directory and delete anything you did not deliberately edit.
 
-To customize a file, copy it into an override path first with the `customize-file.sh` helper. The runnable commands,
+To customize a file, copy it into an override path first with the `customize-file.py` helper. The runnable commands,
 and what an override commits you to, are in the **Customization** paragraph of the project README:
 https://github.com/umputun/cc-thingz#planning — kept there because both plugin paths have to be spelled out
 literally, and only the README carries that form. That paragraph is authoritative; do not restate it here.
@@ -78,13 +81,13 @@ literally, and only the README carries that form. That paragraph is authoritativ
 
 ### Subagent constraint
 
-Subagents in current Claude Code do not have the Agent tool — they cannot spawn other subagents. `prompts/review.md` is therefore read by the main session orchestrator (as a playbook), not given to a subagent. The 5-specialist fanout runs directly from the main session. Leaf-work prompts (`task.md`, `fixer.md`, `finalizer.md`, `codex-review.md`, `agents/smells.txt`) can be subagent prompts because they don't need to spawn further. Any custom override needing parallel fanout must follow the same playbook pattern.
+Subagents cannot spawn further subagents. `prompts/review.md` is therefore read by the main session orchestrator (as a playbook), not given to a subagent. The specialist fanout (5 agents for the full route, 2 for critical-only, or 1 combined pass for the simplified route — see the review-route sizing in `SKILL.md`) runs directly from the main session. Leaf-work prompts (`task.md`, `fixer.md`, `finalizer.md`, `codex-review.md`, `agents/smells.txt`) can be subagent prompts because they don't need to spawn further. Any custom override needing parallel fanout must follow the same playbook pattern.
 
 ## Plan-Review — agent
 
 ### Triggers
 - launched by make's "Auto review" option
-- usable as `subagent_type: "plan-review"` in Agent tool calls
+- usable as a named `plan-review` subagent persona when spawning subagents (or as a general-purpose subagent given its instructions verbatim, on hosts without named personas)
 
 ### What It Checks
 - problem definition and solution correctness
@@ -103,7 +106,7 @@ Structured report with severity-rated findings:
 ## Interactive Review
 
 After creating a plan, make offers interactive review via:
-- **revdiff** (if installed) — TUI with syntax highlighting and line-level annotations
-- **plan-annotate.py** (fallback) — opens plan in `$EDITOR` via terminal overlay
+- **[Plannotator](https://github.com/backnotprop/plannotator)** (if installed — `command -v plannotator`) — run `/plannotator-annotate <plan-file>` (Claude Code/Copilot CLI slash command) or `$plannotator-annotate <plan-file>` (Codex skill-prefix form) yourself; it opens a local browser review UI and returns structured feedback to the conversation
+- **plan-annotate.py** (fallback, if Plannotator isn't installed) — opens plan in `$EDITOR` via terminal overlay
 
-Both loop until the user quits without annotations.
+Both loop until the user is done annotating.
