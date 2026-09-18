@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Writing Plans",
     "shortDescription": "Turn approved specs into reviewed implementation plans.",
-    "longDescription": "Write detailed, test-driven implementation plans from approved design docs or requirements, with file maps, bite-sized tasks, commands, expected results, and reviewer subagent checks.",
+    "longDescription": "Write detailed, test-driven implementationcd . plans from approved design docs or requirements, with file maps, bite-sized tasks, commands, expected results, and reviewer subagent checks.",
     "developerName": "Jesse Vincent / obra",
     "category": "Developer Tools",
     "capabilities": [

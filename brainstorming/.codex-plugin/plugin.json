@@ -21,9 +21,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Brainstorming",
-    "shortDescription": "Use structured brainstorming and design workflows.",
-    "longDescription": "Clarify goals, explore solution approaches, compare tradeoffs, and produce design docs with optional visual sketching support.",
-    "developerName": "obra/superpowers",
+    "shortDescription": "Collaborative design dialogue - idea to approaches to design to plan",
+    "longDescription": "Collaborative design dialogue - idea to approaches to design to plan",
     "category": "Productivity",
     "capabilities": [
       "Interactive"

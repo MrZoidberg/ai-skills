@@ -3,20 +3,16 @@
   "version": "0.1.1",
   "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, proposing approaches, and writing design docs. Includes a visual companion for sketching ideas.",
   "author": {
-    "name": "obra/superpowers"
+    "name": "Mike Merkulov (fork from Umputun)"
   },
   "repository": "https://github.com/MrZoidberg/ai-skills",
   "license": "MIT",
   "keywords": [
     "brainstorming",
-    "design",
+    "architecture",
     "ideas",
-    "visual",
     "mockups",
-    "sketching",
-    "planning",
-    "specs",
-    "documentation"
+    "planning"
   ],
   "category": "Productivity",
   "skills": "./skills/"
