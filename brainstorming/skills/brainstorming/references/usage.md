@@ -9,7 +9,8 @@ The brainstorm skill activates on:
 - "explore options for"
 - any request for thorough analysis of changes, features, or architectural decisions
 
-Invoke directly with `/brainstorm:brainstorm` or let it activate via intent matching.
+Invoke directly with `$brainstorming` (Codex CLI) or `/brainstorming` (Copilot CLI), or let it
+activate via intent matching.
 
 ## Workflow Phases
 
@@ -29,7 +30,7 @@ Invoke directly with `/brainstorm:brainstorm` or let it activate via intent matc
 - covers architecture, components, data flow, error handling, testing
 
 ### Phase 4: Next Steps
-- **Write plan** — invokes `/planning:make` passing brainstorm context
+- **Write plan** — invokes the `writing-plans` skill, passing brainstorm context
 - **Plan mode** — enters structured plan mode for detailed planning
 - **Start now** — begins implementing directly
 
@@ -40,7 +41,7 @@ User: "let's brainstorm how to add caching to the API"
 → Phase 1: asks about cache scope, invalidation needs, performance goals
 → Phase 2: proposes in-memory LRU, Redis, HTTP cache headers
 → Phase 3: details selected approach section by section
-→ Phase 4: user picks "Write plan" → /planning:make runs with full context
+→ Phase 4: user picks "Write plan" → writing-plans runs with full context
 
 User: "brainstorm a better error handling strategy"
 → Phase 1: examines current error patterns, asks about requirements
@@ -48,8 +49,11 @@ User: "brainstorm a better error handling strategy"
 → Phase 3: designs the selected approach incrementally
 → Phase 4: user picks "Start now" → implementation begins
 
-User: "/brainstorm:brainstorm add my Go rules to user-level brainstorm rules"
-→ asks what rules to add, writes to $CLAUDE_PLUGIN_DATA/brainstorm-rules.md
+User: "$brainstorming add my Go rules to user-level brainstorm rules"
+→ asks what rules to add, writes to <plugin-data-dir>/brainstorm-rules.md
+
+User: "$brainstorming add a project rule: always propose a migration path"
+→ writes to .agents/brainstorm-rules.md in the current repo
 ```
 
 ## Key Principles

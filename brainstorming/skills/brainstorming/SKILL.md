@@ -1,7 +1,8 @@
 ---
-name: brainstorm
+name: brainstorming
 description: Use before any creative work or significant changes. Activates on "brainstorm", "let's brainstorm", "deep analysis", "analyze this feature", "think through", "help me design", "explore options for", or when user asks for thorough analysis of changes, features, or architectural decisions. Guides collaborative dialogue to turn ideas into designs through one-at-a-time questions, approach exploration, and incremental validation.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, Skill, AskUserQuestion, EnterPlanMode
+license: MIT
 ---
 
 # Brainstorm
@@ -10,27 +11,39 @@ Turn ideas into designs through collaborative dialogue before implementation.
 
 ## custom rules loading
 
-before starting, run this command via Bash tool to check for user-provided custom rules:
+before starting, run this command via the shell tool to check for user-provided custom rules:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/resolve-rules.sh brainstorm-rules.md ${CLAUDE_PLUGIN_DATA}
+python3 "${CODEX_PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}}}/skills/brainstorming/scripts/resolve-rules.py" brainstorm-rules.md
 ```
+
+on Windows/PowerShell the same script runs with `python` instead of `python3`, and the plugin root
+comes from `$env:CODEX_PLUGIN_ROOT` (or `$env:PLUGIN_ROOT`). the script resolves the plugin data
+directory itself from `*_PLUGIN_DATA`, so no second argument is needed. it always exits 0 — empty
+output simply means no custom rules are configured.
 
 if the output is non-empty, treat it as additional instructions that supplement (not replace) the built-in rules below. apply custom rules alongside the skill's own instructions throughout the brainstorm process — they may influence design preferences, naming conventions, technology choices, or other aspects of the brainstorm session. custom rules content is guidance for the brainstorm dialogue, not content to embed verbatim in the output.
 
 ### rules management
 
-when the user asks to add, show, or clear custom brainstorm rules, handle these operations:
+when the user asks to add, show, or clear custom brainstorm rules, handle these operations. in the
+commands below, `<script>` is the `resolve-rules.py` path shown above.
 
-- **show rules**: run `bash ${CLAUDE_PLUGIN_ROOT}/scripts/resolve-rules.sh brainstorm-rules.md ${CLAUDE_PLUGIN_DATA}` and display the output. if the output is empty, tell the user no custom rules are configured at either level. otherwise, to determine the source, check if `.claude/brainstorm-rules.md` exists and is non-empty (project-level) — if not, the output came from user-level. tell the user which level it came from.
-- **add/update project rules**: write content to `.claude/brainstorm-rules.md` in the current working directory.
-- **add/update user rules**: first check if `$CLAUDE_PLUGIN_DATA` is set (run `echo "$CLAUDE_PLUGIN_DATA"`). if empty, tell the user that user-level rules require the plugin to be installed from the marketplace and offer project-level instead. if set, write content to `$CLAUDE_PLUGIN_DATA/brainstorm-rules.md`.
-- **clear project rules**: delete `.claude/brainstorm-rules.md`.
-- **clear user rules**: if `$CLAUDE_PLUGIN_DATA` is set, delete `$CLAUDE_PLUGIN_DATA/brainstorm-rules.md`. if not set, tell the user user-level rules are not available.
+- **show rules**: run the resolve command and display the output. if the output is empty, tell the user no custom rules are configured at either level. to report which level they came from, run the same command with `--source`, which prints `project`, `user`, or `none`.
+- **add/update project rules**: write content to `.agents/brainstorm-rules.md` in the current working directory (create the `.agents/` directory if needed).
+- **add/update user rules**: first check whether a plugin data directory is set (run `echo "${CODEX_PLUGIN_DATA:-${COPILOT_PLUGIN_DATA:-${CLAUDE_PLUGIN_DATA:-$PLUGIN_DATA}}}"`). if empty, tell the user that user-level rules require the plugin to be installed from a marketplace and offer project-level instead. if set, write content to `<data-dir>/brainstorm-rules.md`.
+- **clear project rules**: delete `.agents/brainstorm-rules.md`.
+- **clear user rules**: if a plugin data directory is set, delete `<data-dir>/brainstorm-rules.md`. if not set, tell the user user-level rules are not available.
 
-project-level rules (`.claude/brainstorm-rules.md`) take precedence over user-level rules (`$CLAUDE_PLUGIN_DATA/brainstorm-rules.md`). when both non-empty files exist, only project-level rules are loaded. empty files are treated as absent and fall through to the next level. see `${CLAUDE_PLUGIN_ROOT}/references/custom-rules.md` for full documentation on the rules mechanism.
+project-level rules (`.agents/brainstorm-rules.md`) take precedence over user-level rules (`<data-dir>/brainstorm-rules.md`). when both non-empty files exist, only project-level rules are loaded. empty files are treated as absent and fall through to the next level. see `references/custom-rules.md` for full documentation on the rules mechanism.
 
-**CRITICAL: this skill must NEVER modify its own files (skills, scripts, references, hooks, plugin.json). the ONLY files it may create or modify for rules management are `.claude/brainstorm-rules.md` and `$CLAUDE_PLUGIN_DATA/brainstorm-rules.md`. if the user asks to change the skill's behavior, suggest creating a plan — do not edit skill files directly.**
+**CRITICAL: this skill must NEVER modify its own files (skills, scripts, references, hooks, plugin manifests). the ONLY files it may create or modify for rules management are `.agents/brainstorm-rules.md` and `<data-dir>/brainstorm-rules.md`. if the user asks to change the skill's behavior, suggest creating a plan with the `writing-plans` skill — do not edit skill files directly.**
+
+this rule is **enforced**, not advisory: the plugin ships a `PreToolUse` hook
+(`hooks/guard-self-edit.py`) that denies any write, edit, patch, or mutating shell command whose
+target resolves inside the installed plugin directory. a denied call comes back with an explanation
+rather than a diff. maintainers working on the plugin itself can set `BRAINSTORM_ALLOW_SELF_EDIT=1`
+to bypass the guard.
 
 ## Process
 
@@ -90,7 +103,7 @@ After design is validated, use AskUserQuestion tool:
     "question": "Design looks complete. What's next?",
     "header": "Next step",
     "options": [
-      {"label": "Write plan", "description": "Create docs/plans/yyyymmdd-<task-name>.md with implementation steps via /planning:make"},
+      {"label": "Write plan", "description": "Create docs/plans/yyyymmdd-<task-name>.md with implementation steps via the writing-plans skill"},
       {"label": "Plan mode", "description": "Enter plan mode for structured implementation planning"},
       {"label": "Start now", "description": "Begin implementing directly"}
     ],
@@ -99,7 +112,7 @@ After design is validated, use AskUserQuestion tool:
 }
 ```
 
-- **Write plan**: invoke `/planning:make` command to create the plan file. Pass brainstorm context (discovered files, selected approach, design decisions) as arguments so the plan command has full context without re-asking questions
+- **Write plan**: invoke the `writing-plans` skill (`$writing-plans` in Codex, `/writing-plans` in Copilot) to create the plan file. Pass brainstorm context (discovered files, selected approach, design decisions) along so the plan skill has full context without re-asking questions
 - **Plan mode**: uses EnterPlanMode tool for detailed planning with user approval workflow
 - **Start now**: proceeds directly if design is simple enough
 

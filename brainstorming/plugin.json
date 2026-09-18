@@ -1,7 +1,7 @@
 {
   "name": "brainstorming",
-  "version": "0.1.1",
-  "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, proposing approaches, and writing design docs. Includes a visual companion for sketching ideas.",
+  "version": "0.2.0",
+  "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, exploring 2-3 approaches with trade-offs, and validating a design incrementally before any code is written.",
   "author": {
     "name": "Mike Merkulov (fork from Umputun)"
   },
@@ -11,9 +11,10 @@
     "brainstorming",
     "architecture",
     "ideas",
-    "mockups",
+    "design",
     "planning"
   ],
   "category": "Productivity",
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
 }

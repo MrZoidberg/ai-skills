@@ -16,7 +16,7 @@ Learn more:
 | Plugin | Version | Codex | Copilot | Claude Code | Antigravity |
 | --- | --- | --- | --- | --- | --- |
 | `coding-python` | `0.2.0` | Yes | Yes (installer) | Yes (installer) | N/A |
-| `brainstorming` | `0.1.1` | Yes | Yes (installer) | Yes (installer) | N/A |
+| `brainstorming` | `0.2.0` | Yes | Yes (installer) | Yes (installer) | N/A |
 | `writing-plans` | `0.1.0` | Yes | Yes (installer) | Yes (installer) | N/A |
 
 ---
@@ -46,7 +46,7 @@ N/A
 
 ## Plugin: `brainstorming`
 
-Structured approach to brainstorming and design. Guides users through clarifying questions, proposing approaches, and writing design docs. Includes a visual companion for sketching ideas.
+Structured approach to brainstorming and design. Guides users through clarifying questions, exploring 2-3 approaches with trade-offs, and validating a design incrementally before any code is written.
 
 Use it for:
 
@@ -54,7 +54,10 @@ Use it for:
 - Designing a new feature or system.
 - Generating a design doc.
 
-Folder: `brainstorming/`
+Folder: `brainstorming/` — see [`brainstorming/README.md`](brainstorming/README.md) for full usage.
+
+Supports project-level custom rules in `.agents/brainstorm-rules.md`, and ships a `PreToolUse` hook
+that blocks the skill from modifying its own files.
 
 ### What's included
 

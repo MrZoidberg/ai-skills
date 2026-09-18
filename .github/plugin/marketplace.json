@@ -20,12 +20,12 @@
     },
     {
       "name": "brainstorming",
-      "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, proposing approaches, and writing design docs.",
-      "version": "0.1.1",
+      "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, exploring 2-3 approaches with trade-offs, and validating a design incrementally before any code is written.",
+      "version": "0.2.0",
       "source": "./brainstorming",
       "license": "MIT",
       "category": "Productivity",
-      "keywords": ["brainstorming", "design", "planning", "specs", "documentation"]
+      "keywords": ["brainstorming", "design", "architecture", "planning", "specs", "documentation"]
     },
     {
       "name": "writing-plans",

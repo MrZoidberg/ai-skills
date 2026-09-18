@@ -1,9 +1,9 @@
 {
   "name": "brainstorming",
-  "version": "0.1.1",
-  "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, proposing approaches, and writing design docs. Includes a visual companion for sketching ideas.",
+  "version": "0.2.0",
+  "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, exploring 2-3 approaches with trade-offs, and validating a design incrementally before any code is written.",
   "author": {
-    "name": "obra/superpowers"    
+    "name": "Mike Merkulov (fork from Umputun)"
   },
   "repository": "https://github.com/MrZoidberg/ai-skills",
   "license": "MIT",
@@ -11,18 +11,18 @@
     "brainstorming",
     "design",
     "ideas",
-    "visual",
-    "mockups",
-    "sketching",
+    "architecture",
     "planning",
     "specs",
     "documentation"
   ],
   "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Brainstorming",
     "shortDescription": "Collaborative design dialogue - idea to approaches to design to plan",
-    "longDescription": "Collaborative design dialogue - idea to approaches to design to plan",
+    "longDescription": "Collaborative design dialogue that turns a rough idea into a validated design: one question at a time, 2-3 approaches with trade-offs, then incremental section-by-section review before handing off to a plan. Supports project and user level custom rules, and ships a PreToolUse hook that prevents the skill from modifying its own files.",
+    "developerName": "Mike Merkulov (fork from Umputun)",
     "category": "Productivity",
     "capabilities": [
       "Interactive"
@@ -31,7 +31,7 @@
     "defaultPrompt": [
       "Use brainstorming to explore approaches for this feature.",
       "Use brainstorming to turn this idea into a design doc.",
-      "Use brainstorming to sketch and compare product directions."
+      "Use brainstorming to compare implementation directions before I commit to one."
     ],
     "brandColor": "#7C3AED"
   }
