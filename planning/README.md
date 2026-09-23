@@ -18,7 +18,7 @@ Folder: `planning/`
 
 ## What's included
 
-### Commands (Slash Commands)
+### Commands (Slash Commands — Claude Code / Copilot CLI only)
 
 | Command | Description |
 |---------|--------------|
@@ -28,6 +28,7 @@ Folder: `planning/`
 
 | Skill | Description |
 |-------|-------------|
+| `make` | Same interactive plan authoring as the `make` command above, packaged as a skill so Codex CLI (which only loads `skills/`, not `commands/`) can invoke it as `$make`. |
 | `exec` | Autonomous execution of an approved plan file: branch or worktree isolation, a per-task subagent loop, an adaptive review cascade, opt-in external adversarial review, and a finalize (rebase/squash) step. |
 
 ### Bundled Resources
@@ -52,11 +53,15 @@ Folder: `planning/`
 ## How to use it
 
 ```
-$planning make                                     # Codex CLI — author a plan
-$planning exec docs/plans/20260101-example.md       # Codex CLI — execute an approved plan
+$make                                               # Codex CLI — author a plan
+$exec docs/plans/20260101-example.md                # Codex CLI — execute an approved plan
 /planning:make                                      # Copilot CLI / Claude Code
 /planning:exec docs/plans/20260101-example.md       # Copilot CLI / Claude Code
 ```
+
+Codex CLI's skill prefix is the skill's own name (from its `SKILL.md` `name:` field), not the
+plugin name — there is no `$planning <subcommand>` form. That's why this plugin ships two Codex
+skills, `skills/make/` and `skills/exec/`, invoked as `$make` and `$exec` respectively.
 
 It also activates on intent — phrases like *"write a plan for..."*, *"turn this design into
 tasks"*, or *"execute this plan"*.

@@ -112,7 +112,7 @@ After design is validated, use AskUserQuestion tool:
 }
 ```
 
-- **Write plan**: invoke the `planning` skill's `make` command (`$planning make` in Codex, `/planning:make` in Copilot/Claude Code) to create the plan file. Pass brainstorm context (discovered files, selected approach, design decisions) along so the plan skill has full context without re-asking questions
+- **Write plan**: invoke the `planning` plugin's `make` skill (`$make` in Codex, `/planning:make` in Copilot/Claude Code) to create the plan file. Pass brainstorm context (discovered files, selected approach, design decisions) along so the plan skill has full context without re-asking questions
 - **Plan mode**: uses EnterPlanMode tool for detailed planning with user approval workflow
 - **Start now**: proceeds directly if design is simple enough
 
