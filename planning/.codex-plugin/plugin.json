@@ -1,6 +1,6 @@
 {
   "name": "planning",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Structured implementation planning, interactive annotation review via Plannotator (with a local fallback), and plan execution with an adaptive review cascade sized to the plan.",
   "author": {
     "name": "Mike Merkulov (fork from Umputun)"
