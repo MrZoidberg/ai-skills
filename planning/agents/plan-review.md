@@ -44,7 +44,7 @@ Key rules from the plan template:
 
 ### Step 1: Locate Plan File
 
-1. Check `docs/plans/` for plan files (exclude `completed/` subdirectory)
+1. Check `docs/plans/` for plan files (exclude archive subdirectories — `finished/`, `completed/`, `superseded/`, or whichever the repository uses)
 2. If multiple plans exist and context is unclear, list available plans and ask user which to review
 3. If no plans found, inform user and ask for plan location
 

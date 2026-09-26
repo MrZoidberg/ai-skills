@@ -283,7 +283,7 @@ Example (NOTICE: Files block + tests as separate checklist items):
 ### Task N: [Final] Update documentation
 - [ ] update README.md if needed
 - [ ] update CLAUDE.md if new patterns discovered
-- [ ] move this plan to `docs/plans/completed/`
+- [ ] move this plan to the repository's plans archive directory
 
 ## Post-Completion
 *Items requiring manual intervention or external systems - no checkboxes, informational only*
@@ -384,8 +384,8 @@ then ask the user, offering these options:
 5. **on completion**:
    - verify all checkboxes marked
    - run final test suite
-   - move plan to `docs/plans/completed/`
-   - create directory if needed: `mkdir -p docs/plans/completed`
+   - move plan into the repository's plans archive directory — reuse the existing `finished/`, `completed/` or similar directory that sits beside `future/` / `in-progress/`; do not create a second archive directory when one already exists
+   - create the archive directory only when the repository has none
 
 6. **partial implementation exception**:
    - if a task provides partial implementation where tests cannot pass until a later task:
