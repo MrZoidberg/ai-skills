@@ -31,6 +31,15 @@ python3 ${CODEX_PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-$PLUGI
 ```
 The script checks project overrides, user overrides, and bundled defaults automatically.
 
+### plugin root and data directory on each host
+
+the `${CODEX_PLUGIN_ROOT:-…}` / `${CODEX_PLUGIN_DATA:-…}` chains in this skill and in `references/prompts/*.md` are **text you substitute before running a command** — never pass the literal `${…}` to the shell.
+
+- **Codex / Copilot / Claude Code** set `CODEX_PLUGIN_ROOT` / `COPILOT_PLUGIN_ROOT` / `CLAUDE_PLUGIN_ROOT` (and the matching `*_PLUGIN_DATA`) through the plugin loader.
+- **Pi** (`pi install`) sets neither — only `PI_*` session variables. Pi tells you the absolute directory of this skill, and every skill in this repository sits at `<plugin root>/skills/<name>/SKILL.md`, so **the plugin root is two levels above this skill's directory** (`<skill dir>/../..`). resolve it once, up front, and substitute the absolute path everywhere the chain appears, including in the `PLUGIN_ROOT` placeholder passed to task subagents.
+- **Pi data directory**: use `~/.pi/agent/ai-skills`. Pi has no `PLUGIN_DATA`, so treat that path as set — pass it as `PLUGIN_DATA_DIR` and create it when writing user-level rules instead of reporting user-level rules unavailable.
+- **Pi hooks**: Pi never reads `hooks/hooks.json`, so this plugin's `PreToolUse` and `SessionStart` hooks do not run under Pi.
+
 ### Placeholder Substitution
 
 After reading a prompt file, replace ALL placeholders with actual values before passing to a subagent. Subagents run in fresh contexts without plugin env vars.

@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Personal collection of agent skills: small, reusable bundles of instructions for AI coding agents.",
-    "version": "1.0.0"
+    "version": "0.2.1"
   },
   "plugins": [
     {
       "name": "coding-python",
       "description": "Practical Python project setup, modern uv/ruff/ty/pytest workflows, PEP 723 scripts, and careful migration from legacy Python tooling.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "source": "./coding-python",
       "license": "MIT",
       "category": "Developer Tools",
@@ -21,7 +21,7 @@
     {
       "name": "brainstorming",
       "description": "Structured approach to brainstorming and design. Guides users through clarifying questions, exploring 2-3 approaches with trade-offs, and validating a design incrementally before any code is written.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "source": "./brainstorming",
       "license": "MIT",
       "category": "Productivity",
@@ -30,7 +30,7 @@
     {
       "name": "planning",
       "description": "Structured implementation planning, interactive annotation review via Plannotator (with a local fallback), and plan execution with an adaptive review cascade sized to the plan.",
-      "version": "0.1.0",
+      "version": "0.2.1",
       "source": "./planning",
       "license": "MIT",
       "category": "Developer Tools",

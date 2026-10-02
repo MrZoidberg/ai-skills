@@ -22,6 +22,15 @@ comes from `$env:CODEX_PLUGIN_ROOT` (or `$env:PLUGIN_ROOT`). the script resolves
 directory itself from `*_PLUGIN_DATA`, so no second argument is needed. it always exits 0 — empty
 output simply means no custom rules are configured.
 
+### plugin root and data directory on each host
+
+the `${CODEX_PLUGIN_ROOT:-…}` chain in the command above is **text you substitute before running it** — never pass the literal `${…}` to the shell.
+
+- **Codex / Copilot / Claude Code** set `CODEX_PLUGIN_ROOT` / `COPILOT_PLUGIN_ROOT` / `CLAUDE_PLUGIN_ROOT` (and the matching `*_PLUGIN_DATA`) through the plugin loader.
+- **Pi** (`pi install`) sets neither — only `PI_*` session variables. Pi tells you the absolute directory of this skill, and every skill in this repository sits at `<plugin root>/skills/<name>/SKILL.md`, so **the plugin root is two levels above this skill's directory** (`<skill dir>/../..`). resolve it once, up front, and substitute the absolute path everywhere the chain appears.
+- **Pi data directory**: use `~/.pi/agent/ai-skills`. Pi has no `PLUGIN_DATA`, so treat that path as set — create it when writing user-level rules instead of reporting user-level rules unavailable.
+- **Pi hooks**: Pi never reads `hooks/hooks.json`. The `PreToolUse` self-modification guard described below is **not enforced** under Pi; follow the CRITICAL rule on your own.
+
 if the output is non-empty, treat it as additional instructions that supplement (not replace) the built-in rules below. apply custom rules alongside the skill's own instructions throughout the brainstorm process — they may influence design preferences, naming conventions, technology choices, or other aspects of the brainstorm session. custom rules content is guidance for the brainstorm dialogue, not content to embed verbatim in the output.
 
 ### rules management

@@ -21,6 +21,15 @@ before starting, run this command via Bash tool to check for user-provided custo
 python3 ${CODEX_PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-$PLUGIN_ROOT}}}/scripts/resolve-rules.py planning-rules.md
 ```
 
+### plugin root and data directory on each host
+
+the `${CODEX_PLUGIN_ROOT:-…}` / `${CODEX_PLUGIN_DATA:-…}` chains below are **text you substitute before running a command** — never pass the literal `${…}` to the shell.
+
+- **Codex / Copilot / Claude Code** set `CODEX_PLUGIN_ROOT` / `COPILOT_PLUGIN_ROOT` / `CLAUDE_PLUGIN_ROOT` (and the matching `*_PLUGIN_DATA`) through the plugin loader.
+- **Pi** (`pi install`) sets neither — only `PI_*` session variables. Pi tells you the absolute directory of this skill, and every skill in this repository sits at `<plugin root>/skills/<name>/SKILL.md`, so **the plugin root is two levels above this skill's directory** (`<skill dir>/../..`, i.e. the directory holding `scripts/` and `references/`). resolve it once, up front, and substitute the absolute path everywhere the chain appears.
+- **Pi data directory**: use `~/.pi/agent/ai-skills`. Pi has no `PLUGIN_DATA`, so treat that path as set — create it when writing user-level rules instead of reporting user-level rules unavailable.
+- **Pi hooks**: Pi never reads `hooks/hooks.json`, so the `PreToolUse` self-modification guard is **not enforced** under Pi — follow the CRITICAL rule below on your own.
+
 if the output is non-empty, treat it as additional instructions that supplement (not replace) the built-in rules below. apply custom rules alongside the command's own instructions throughout the planning process — they may influence plan structure, testing approach, naming conventions, or other aspects of plan creation. custom rules content is guidance for creating the plan, not content to embed verbatim in the output plan file.
 
 ### rules management
