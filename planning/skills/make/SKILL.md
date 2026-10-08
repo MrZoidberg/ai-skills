@@ -13,6 +13,12 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, AskUserQuestion, Task
 
 create an implementation plan in `docs/plans/yyyymmdd-<task-name>.md` with interactive context gathering.
 
+## Native questions
+
+- Use available, permitted native question tools throughout: Codex `request_user_input` or `request_user_input_async`; Claude/Copilot `AskUserQuestion`; other hosts (including Pi) their equivalent. Fall back to one concise chat question.
+- Follow the tool's actual schema and option limits; JSON examples below are illustrative.
+- Async `accepted` means submitted, not answered. Wait for the reply before dependent decisions; do not repeat the question in chat or treat silence, timeout, or defaults as approval.
+
 ## custom rules loading
 
 before starting, run this command via Bash tool to check for user-provided custom rules:
