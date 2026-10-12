@@ -13,7 +13,7 @@ Usage:
 
 Options:
   --plugin NAME           Plugin name (e.g. coding-python). Installs all skills under <plugin>/skills if present.
-  --system NAME           Agentic system: codex | copilot | claude | antigravity
+  --system NAME           Agentic system: codex | copilot | claude | antigravity | pi
   --scope NAME            Install scope: user | project (aliases: system | repo)
   --repo-root PATH        Repo root for project installs (auto-detected if omitted)
   --source-repo URL       Git repo URL (default: MrZoidberg/ai-skills)
@@ -97,11 +97,11 @@ while [ $# -gt 0 ]; do
 done
 
 prompt PLUGIN "Plugin (e.g. coding-python): "
-prompt SYSTEM "System (codex/copilot/claude/antigravity): "
+prompt SYSTEM "System (codex/copilot/claude/antigravity/pi): "
 prompt SCOPE "Scope (system/repo) or (user/project): "
 
 case "$SYSTEM" in
-  codex|copilot|claude|claude-code|antigravity) ;;
+  codex|copilot|claude|claude-code|antigravity|pi) ;;
   *) die "Invalid --system: $SYSTEM" ;;
 esac
 
@@ -157,6 +157,13 @@ case "$SYSTEM:$SCOPE" in
   antigravity:user)
     DEST_ROOT="$HOME/.agents/skills" ;;
   antigravity:project)
+    DEST_ROOT="$REPO_ROOT/.agents/skills" ;;
+  # pi reads the shared ~/.agents/skills and .agents/skills locations, same as codex.
+  # symlinks are resolved through to the cloned repo, so the plugin-root-relative
+  # script paths (e.g. planning/scripts/resolve-rules.py) keep working.
+  pi:user)
+    DEST_ROOT="$HOME/.agents/skills" ;;
+  pi:project)
     DEST_ROOT="$REPO_ROOT/.agents/skills" ;;
   *)
     die "Unsupported combination: $SYSTEM / $SCOPE" ;;

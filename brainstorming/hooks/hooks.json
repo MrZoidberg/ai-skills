@@ -1,0 +1,21 @@
+{
+  "description": "Enforce that the brainstorming skill never modifies its own files",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|apply_patch|create|edit|str_replace_editor|Bash|bash|shell|powershell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'g=\"${CODEX_PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:-$PWD}}}}/hooks/guard-self-edit.py\"; [ -f \"$g\" ] || exit 0; command -v python3 >/dev/null || exit 0; python3 \"$g\"; if [ $? -eq 2 ]; then exit 2; fi; exit 0'",
+            "commandWindows": "$root = @($env:CODEX_PLUGIN_ROOT, $env:COPILOT_PLUGIN_ROOT, $env:CLAUDE_PLUGIN_ROOT, $env:PLUGIN_ROOT, $PWD.Path) | Where-Object { $_ } | Select-Object -First 1; $g = Join-Path $root 'hooks/guard-self-edit.py'; if (-not (Test-Path $g)) { exit 0 }; if (-not (Get-Command python -ErrorAction SilentlyContinue)) { exit 0 }; python $g; if ($LASTEXITCODE -eq 2) { exit 2 } else { exit 0 }",
+            "powershell": "$root = @($env:CODEX_PLUGIN_ROOT, $env:COPILOT_PLUGIN_ROOT, $env:CLAUDE_PLUGIN_ROOT, $env:PLUGIN_ROOT, $PWD.Path) | Where-Object { $_ } | Select-Object -First 1; $g = Join-Path $root 'hooks/guard-self-edit.py'; if (-not (Test-Path $g)) { exit 0 }; if (-not (Get-Command python -ErrorAction SilentlyContinue)) { exit 0 }; python $g; if ($LASTEXITCODE -eq 2) { exit 2 } else { exit 0 }",
+            "timeout": 10,
+            "timeoutSec": 10,
+            "statusMessage": "checking brainstorming self-modification guard"
+          }
+        ]
+      }
+    ]
+  }
+}

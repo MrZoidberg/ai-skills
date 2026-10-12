@@ -29,10 +29,10 @@
       "category": "Productivity"
     },
     {
-      "name": "writing-plans",
+      "name": "planning",
       "source": {
         "source": "local",
-        "path": "./writing-plans"
+        "path": "./planning"
       },
       "policy": {
         "installation": "AVAILABLE",
